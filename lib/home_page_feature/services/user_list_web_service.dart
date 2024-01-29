@@ -6,9 +6,11 @@ import 'package:http/http.dart';
 class UserListWebService {
   Future<UserList?> getUserListRequest() async {
     try {
-      var uri = Uri.parse('https://reqres.in/api/{resource}?page=1&per_page=12');
+      var uri = Uri.parse('https://reqres.in/api/users?page=1&per_page=12');
 
       var response = await get(uri);
+
+      print(response.statusCode);
 
       if (response.statusCode == 200) {
         var json = response.body;
