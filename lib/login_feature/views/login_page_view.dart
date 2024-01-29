@@ -35,7 +35,6 @@ class _LoginPageViewState extends ConsumerState<LoginPageView> {
   @override
   Widget build(BuildContext context) {
     ref.listen(loginErrorMessageProvider, (prev, next) {
-      print('test');
       if (next.isNotEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -180,7 +179,7 @@ class _LoginPageViewState extends ConsumerState<LoginPageView> {
 
                               dynamic isLoggedIn =
                                   await ref.read(getIsLoggedInProvider);
-                              print(isLoggedIn.value!);
+
 
                               if ((await ref.read(getIsLoggedInProvider))
                                   .value!) {
@@ -219,7 +218,6 @@ class _LoginPageViewState extends ConsumerState<LoginPageView> {
                   ),
                   InkWell(
                     onTap: () {
-                      print("tab");
                       LaunchUrl().launchLink('https://www.flutter.com');
                     }, //TODO: Contact US / Get Help Part
                     child: const Text(

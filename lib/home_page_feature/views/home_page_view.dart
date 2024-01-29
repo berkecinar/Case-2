@@ -45,10 +45,7 @@ class _HomePageViewState extends ConsumerState<HomePageView> {
                           ),
                           TextButton(
                             onPressed: () {
-                              ref.read(
-                                setIsLoggedInProvider(false),
-                              );
-
+                              ref.watch(setLoginStateProvider);
                               ref.read(clearStorage);
 
                               Navigator.pushAndRemoveUntil<void>(
@@ -133,7 +130,6 @@ class _HomePageViewState extends ConsumerState<HomePageView> {
                 itemCount: state.userList!.data.length,
                 itemBuilder: (context, index) => ListTile(
                   onTap: () {
-                    print('tap');
                     LaunchUrl().launchEmail(state.userList!.data[index].email.toString());
                   },
                   leading: CircleAvatar(child: Image.network(state.userList!.data[index].avatar)),

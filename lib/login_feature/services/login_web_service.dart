@@ -12,8 +12,6 @@ class LoginWebService {
   );
 
   Future<LoginResponse> sendLoginRequest(LoginRequestArguments loginRequestArguments) async {
-    print('response');
-
     dynamic header = {
       "content-type": "application/json"
     };

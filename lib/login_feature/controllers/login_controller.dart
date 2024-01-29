@@ -2,6 +2,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../local_storage/controllers/local_storage_controller.dart';
 import '../models/login_request_arguments_model.dart';
 import '../models/login_response_model.dart';
+import '../models/login_response_parameters_model.dart';
 import '../services/login_web_service.dart';
 
 //Login web service connection for riverpod providers
@@ -16,8 +17,6 @@ final loginProvider = FutureProvider.family<bool, LoginRequestArguments>(
           await ref.watch(authenticationHandlerProvider).sendLoginRequest(
                 loginArguments,
               );
-
-      print(loginResponse.statusCode);
 
       final isLoginSuccess = loginResponse.statusCode == 200;
 
