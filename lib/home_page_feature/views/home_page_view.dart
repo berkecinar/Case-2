@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../local_storage/controllers/local_storage_controller.dart';
-import 'login_page_view.dart';
+import '../../login_feature/views/login_page_view.dart';
 
 class HomePageView extends HookConsumerWidget {
   const HomePageView({super.key});

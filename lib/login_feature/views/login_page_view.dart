@@ -7,7 +7,7 @@ import '../../local_storage/controllers/local_storage_controller.dart';
 import '../models/login_request_arguments_model.dart';
 import '../models/login_response_model.dart';
 import '../models/login_response_parameters_model.dart';
-import 'home_page_view.dart';
+import '../../home_page_feature/views/home_page_view.dart';
 
 class LoginPageView extends StatefulHookConsumerWidget {
   const LoginPageView({super.key});
