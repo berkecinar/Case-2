@@ -1,18 +1,12 @@
 class LoginResponseParameters {
   LoginResponseParameters({
-    required this.token,
-    required this.refreshToken,
-    required this.email,
-    required this.clientId,
+    this.token,
+    this.error,
   });
-  final String token;
-  final String refreshToken;
-  final String clientId;
-  final String email;
+  final String? token;
+  final String? error;
 
   LoginResponseParameters.fromJson(Map<String, dynamic> json)
-      : email = json['email'],
-        token = json['token'],
-        refreshToken = json['refreshToken'],
-        clientId = json['clientId'];
+      : token = json['token'],
+        error = json['error'];
 }
