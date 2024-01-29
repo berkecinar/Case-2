@@ -40,17 +40,6 @@ final setIsLoggedInProvider = StateProvider.family<void, bool>(
 
 
 //userToken Getter/Setter
-final setUserTokenProvider = StateProvider.family<void, String>(
-  (ref, userToken) async {
-    final prefs = await ref.watch(sharedPreferencesProvider);
-    ref.watch(setLoginStateProvider);
-    prefs.setString(
-      userTokenKey,
-      userToken,
-    );
-  },
-);
-
 final getUserTokenProvider = FutureProvider<String>(
   (ref) async {
     final prefs = await ref.watch(sharedPreferencesProvider);
@@ -59,6 +48,16 @@ final getUserTokenProvider = FutureProvider<String>(
   },
 );
 
+final setUserTokenProvider = StateProvider.family<void, String>(
+      (ref, userToken) async {
+    final prefs = await ref.watch(sharedPreferencesProvider);
+    ref.watch(setLoginStateProvider);
+    prefs.setString(
+      userTokenKey,
+      userToken,
+    );
+  },
+);
 
 final clearStorage = StateProvider<dynamic>(
   (ref) async {
