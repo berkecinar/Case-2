@@ -1,3 +1,4 @@
+import 'package:case_2/launch_url_feature/controllers/launch_url_controller.dart';
 import 'package:case_2/login_feature/controllers/login_controller.dart';
 
 import 'package:flutter/material.dart';
@@ -217,7 +218,10 @@ class _LoginPageViewState extends ConsumerState<LoginPageView> {
                     ),
                   ),
                   InkWell(
-                    onTap: () {}, //TODO: Contact US / Get Help Part
+                    onTap: () {
+                      print("tab");
+                      LaunchUrl().launchLink('https://www.flutter.com');
+                    }, //TODO: Contact US / Get Help Part
                     child: const Text(
                       'Bize Ulaşın',
                       style: TextStyle(

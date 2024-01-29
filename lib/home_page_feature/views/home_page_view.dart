@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:case_2/home_page_feature/controllers/user_list_cubit_controller.dart';
 import 'package:case_2/home_page_feature/models/user_list_state.dart';
+import 'package:case_2/launch_url_feature/controllers/launch_url_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -131,6 +132,10 @@ class _HomePageViewState extends ConsumerState<HomePageView> {
               return ListView.builder(
                 itemCount: state.userList!.data.length,
                 itemBuilder: (context, index) => ListTile(
+                  onTap: () {
+                    print('tap');
+                    LaunchUrl().launchEmail(state.userList!.data[index].email.toString());
+                  },
                   leading: CircleAvatar(child: Image.network(state.userList!.data[index].avatar)),
                   title: Text(state.userList!.data[index].firstName + state.userList!.data[index].lastName),
                   subtitle: Text(state.userList!.data[index].email),
