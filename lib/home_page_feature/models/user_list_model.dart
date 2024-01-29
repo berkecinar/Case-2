@@ -46,33 +46,33 @@ class UserList {
 
 class User {
   final int id;
-  final String name;
-  final int year;
-  final String color;
-  final String pantoneValue;
+  final String email;
+  final String firstName;
+  final String lastName;
+  final String avatar;
 
   User({
     required this.id,
-    required this.name,
-    required this.year,
-    required this.color,
-    required this.pantoneValue,
+    required this.email,
+    required this.firstName,
+    required this.lastName,
+    required this.avatar,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
     id: json["id"],
-    name: json["name"],
-    year: json["year"],
-    color: json["color"],
-    pantoneValue: json["pantone_value"],
+    email: json["email"],
+    firstName: json["first_name"],
+    lastName: json["last_name"],
+    avatar: json["avatar"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "name": name,
-    "year": year,
-    "color": color,
-    "pantone_value": pantoneValue,
+    "email": email,
+    "first_name": firstName,
+    "last_name": lastName,
+    "avatar": avatar,
   };
 }
 
