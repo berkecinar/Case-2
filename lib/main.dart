@@ -1,9 +1,9 @@
-import 'package:case_2/views/home_page_view.dart';
-import 'package:case_2/views/login_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'controllers/local_storage_controller.dart';
+import 'local_storage/controllers/local_storage_controller.dart';
+import 'login_feature/views/home_page_view.dart';
+import 'login_feature/views/login_page_view.dart';
 
 void main() {
   runApp(

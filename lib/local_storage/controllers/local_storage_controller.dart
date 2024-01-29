@@ -1,7 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../models/login_response_model.dart';
+import '../../login_feature/models/login_response_model.dart';
+
 
 // Constant SharedPereferences Key's
 const isLoggedInKey = 'isLoggedIn';
@@ -29,6 +30,7 @@ final getIsLoggedInProvider = FutureProvider<bool>(
 
 final setIsLoggedInProvider = StateProvider.family<void, bool>(
   (ref, isLoggedIn) async {
+    print('method $isLoggedIn');
     final prefs = await ref.watch(sharedPreferencesProvider);
     ref.watch(setLoginStateProvider);
     prefs.setBool(
@@ -50,6 +52,7 @@ final getUserTokenProvider = FutureProvider<String>(
 
 final setUserTokenProvider = StateProvider.family<void, String>(
       (ref, userToken) async {
+        print('method $userToken');
     final prefs = await ref.watch(sharedPreferencesProvider);
     ref.watch(setLoginStateProvider);
     prefs.setString(
@@ -63,6 +66,11 @@ final clearStorage = StateProvider<dynamic>(
   (ref) async {
     final prefs = await ref.watch(sharedPreferencesProvider);
     final isCleared = await prefs.clear();
+
+    print(prefs.get("isLoggedIn"));
+    print(prefs.get("userToken"));
+    print(isCleared);
+
     return isCleared;
   },
 );

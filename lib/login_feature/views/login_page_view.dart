@@ -1,18 +1,28 @@
-import 'package:flutter/material.dart';
+import 'package:case_2/login_feature/controllers/login_controller.dart';
 
-class LoginPageView extends StatefulWidget {
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../../local_storage/controllers/local_storage_controller.dart';
+import '../models/login_request_arguments_model.dart';
+import '../models/login_response_model.dart';
+import '../models/login_response_parameters_model.dart';
+import 'home_page_view.dart';
+
+class LoginPageView extends StatefulHookConsumerWidget {
   const LoginPageView({super.key});
 
   @override
-  State<LoginPageView> createState() => _LoginPageViewState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _LoginPageViewState();
 }
 
-class _LoginPageViewState extends State<LoginPageView> {
-
+class _LoginPageViewState extends ConsumerState<LoginPageView> {
   final formKey = GlobalKey<FormState>();
 
   TextEditingController loginMailController = TextEditingController();
   TextEditingController loginPasswordController = TextEditingController();
+
+  bool isButtonEnable = true;
 
   @override
   void dispose() {
@@ -23,13 +33,29 @@ class _LoginPageViewState extends State<LoginPageView> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(loginErrorMessageProvider, (prev, next) {
+      print('test');
+      if (next.isNotEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(next),
+          ),
+        );
+        setState(() {
+          isButtonEnable = true;
+        });
+      } else {
+        loginMailController.text = '';
+        loginPasswordController.text = '';
+      }
+    });
+
     return Scaffold(
       backgroundColor: const Color(0xFFFBFBFB),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-              child:
-            Form(
+            child: Form(
               key: formKey,
               child: Column(
                 children: [
@@ -54,6 +80,7 @@ class _LoginPageViewState extends State<LoginPageView> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                     child: TextFormField(
+                      keyboardType: TextInputType.emailAddress,
                       controller: loginMailController,
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -64,7 +91,7 @@ class _LoginPageViewState extends State<LoginPageView> {
                       decoration: InputDecoration(
                         focusedBorder: const OutlineInputBorder(
                             borderSide:
-                            BorderSide(color: Colors.indigo, width: 2)),
+                                BorderSide(color: Colors.indigo, width: 2)),
                         fillColor: Colors.white,
                         filled: true,
                         prefixIcon: const Icon(
@@ -107,7 +134,7 @@ class _LoginPageViewState extends State<LoginPageView> {
                         filled: true,
                         fillColor: Colors.white,
                         prefixIcon:
-                        const Icon(Icons.lock, color: Colors.indigo),
+                            const Icon(Icons.lock, color: Colors.indigo),
                         labelText: 'Şifre',
                         labelStyle: const TextStyle(
                           color: Colors.indigo,
@@ -124,16 +151,58 @@ class _LoginPageViewState extends State<LoginPageView> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: (){
-                      if(formKey.currentState!.validate()){
-                        print('login');
-                      }
-                    },
+                    onPressed: isButtonEnable == false
+                        ? null
+                        : () async {
+                            if (formKey.currentState!.validate()) {
+                              ref.read(setLoginStateProvider.notifier).state =
+                                  LoginResponse(
+                                      loginResponseParameters:
+                                          new LoginResponseParameters(),
+                                      statusCode: 100);
+
+                              ref.read(setIsLoggedInProvider(false));
+
+                              LoginRequestArguments loginRequestArguments =
+                                  LoginRequestArguments(
+                                email: loginMailController.text,
+                                password: loginPasswordController.text,
+                              );
+
+                              setState(() {
+                                isButtonEnable = false;
+                              });
+
+                              ref.read(
+                                loginProvider(loginRequestArguments),
+                              );
+
+                              dynamic isLoggedIn =
+                                  await ref.read(getIsLoggedInProvider);
+                              print(isLoggedIn.value!);
+
+                              if ((await ref.read(getIsLoggedInProvider))
+                                  .value!) {
+                                setState(() {
+                                  isButtonEnable = true;
+                                });
+                                if (context.mounted) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HomePageView(),
+                                    ),
+                                  );
+                                }
+                              }
+                            }
+                          },
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.indigo,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        )),
+                      backgroundColor: Colors.indigo,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
                     child: const Text(
                       "Giriş Yap",
                       style: TextStyle(

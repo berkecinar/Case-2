@@ -1,8 +1,8 @@
-import 'package:case_2/controllers/local_storage_controller.dart';
-import 'package:case_2/models/login_response_model.dart';
-import 'package:case_2/services/login_web_service.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../local_storage/controllers/local_storage_controller.dart';
 import '../models/login_request_arguments_model.dart';
+import '../models/login_response_model.dart';
+import '../services/login_web_service.dart';
 
 //Login web service connection for riverpod providers
 final authenticationHandlerProvider = StateProvider<LoginWebService>(

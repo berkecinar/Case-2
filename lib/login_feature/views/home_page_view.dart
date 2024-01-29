@@ -1,10 +1,10 @@
 import 'dart:io';
-
-import 'package:case_2/controllers/local_storage_controller.dart';
-import 'package:case_2/views/login_page_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../../local_storage/controllers/local_storage_controller.dart';
+import 'login_page_view.dart';
 
 class HomePageView extends HookConsumerWidget {
   const HomePageView({super.key});
